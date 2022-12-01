@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css"; //
 
-function App() {
+function User(props) {
+  return <div className="square-style">{props.user.name}</div>;
+}
+
+const App = () => {
+  const [users, setUsers] = useState([
+    { id: 1, name: "항해뽀개기" },
+    { id: 2, name: "취업하기" },
+    { id: 3, name: "돈많이벌기" },
+    { id: 4, name: "숙제열심히하기" },
+  ]);
+  const [name, setName] = useState("");
+  const onClickHandler = () => {
+    const newTodo = {
+      id: users.length + 1,
+      name: name,
+    };
+    setUsers([...users, newTodo]);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div className="actiongroup1">
+        <input
+          value={name}
+          placeholder="오늘 할 일을 적어보세요!"
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button onClick={onClickHandler}>추가하기</button>
+      </div>
+      <h1 className="actiongroup2">Todo_list</h1>
+      <div className="app-style">
+        {users.map((user) => {
+          return <User user={user} key={user.id}></User>;
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
